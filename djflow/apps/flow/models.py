@@ -9,7 +9,7 @@ class Account(models.Model):
     """
     Cuentas del usuario
     """
-    created_by = models.ForeignKey(User, help_text=_("Usuario que ha creado la cuenta"))
+    created_by = models.ForeignKey(User, help_text=_("Usuario que ha creado la cuenta"), on_delete=models.CASCADE)
     name = models.CharField(max_length=1000, verbose_name=_("Nombre"))
     description = models.TextField(max_length=1000, verbose_name=_("Descripción"), null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, help_text=_("Fecha de creación"))
@@ -50,10 +50,10 @@ class Transaction(models.Model):
     Registra los ingresos / egresos
     """
 
-    created_by = models.ForeignKey(User, help_text=_("Usuario que ha creado la cuenta"))
-    account = models.ForeignKey(Account, help_text=_("Cuenta a afectar"), verbose_name=_("Cuenta"))
+    created_by = models.ForeignKey(User, help_text=_("Usuario que ha creado la cuenta"), on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, help_text=_("Cuenta a afectar"), verbose_name=_("Cuenta"), on_delete=models.CASCADE)
     name = models.CharField(max_length=500, verbose_name=_("Descripción"))
-    category = models.ForeignKey(Category, verbose_name=_("Categoría"))
+    category = models.ForeignKey(Category, verbose_name=_("Categoría"), on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=2, max_digits=12, verbose_name=_("Monto"))
     date = models.DateField(help_text=_("Fecha del movimiento"), verbose_name=_("Fecha"))
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -68,8 +68,8 @@ class Transaction(models.Model):
 
 
 class TransactionComment(models.Model):
-    transaction = models.ForeignKey(Transaction, verbose_name=_("Transacción"))
-    created_by = models.ForeignKey(User, verbose_name=_("Usuario"))
+    transaction = models.ForeignKey(Transaction, verbose_name=_("Transacción"), on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, verbose_name=_("Usuario"), on_delete=models.CASCADE)
     comment = models.TextField(max_length=1200, verbose_name=_("Comentario"))
     timestamp = models.DateTimeField(auto_now_add=True)
 

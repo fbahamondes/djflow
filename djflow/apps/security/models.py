@@ -13,7 +13,7 @@ class UserProfile(models.Model):
         url = "Users/%s/profile/%s.%s" % (self.user.id, slugify(str(file_name)), extension)
         return url
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     image_profile = models.ImageField(upload_to=image_path, null=True, blank=True)
 
     def __str__(self):

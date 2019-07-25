@@ -103,3 +103,6 @@ db.sqlite3
 .idea
 settings.json
 /media/
+
+# vscode folders
+.vscode/
